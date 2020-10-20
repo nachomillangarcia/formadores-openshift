@@ -2,7 +2,6 @@
 
 ## Construir y desplegar
 ```
-mvn package
 docker build -t formadoresit-nginx .
 docker run -p 8080:80 formadoresit-nginx
 ```
