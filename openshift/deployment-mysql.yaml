@@ -25,3 +25,11 @@ spec:
                 value: todo
               - name: MYSQL_PASSWORD
                 value: pass
+              resources:
+                requests:
+                  cpu: 200m
+                  memory: 1G
+                limits:
+                  cpu: 500m
+                  memory: 1.5G
+                  
