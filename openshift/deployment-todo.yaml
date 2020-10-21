@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    name: todo
+spec:
+    selector:
+        matchLabels:
+            app: todo
+    template:
+        metadata:
+            labels:
+                app: todo
+        spec:
+            containers:
+            - name: todo
+              image: nachomillangarcia/java-todo
+              ports:
+              - containerPort: 8080
+              env:
+              - name: DB_HOSTNAME
+                value: mysql
+              - name: DB_NAME
+                value: todo
+              - name: DB_USERNAME
+                value: todo
+              - name: DB_PASSWORD
+                value: pass
