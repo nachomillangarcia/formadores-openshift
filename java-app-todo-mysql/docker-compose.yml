@@ -1,0 +1,27 @@
+version: "3.8"
+services:
+  mysql:
+    image: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: pass
+      MYSQL_DATABASE: todo
+      MYSQL_USER: todo
+      MYSQL_PASSWORD: pass
+    volumes:
+      - compose-mysql:/var/lib/mysql
+  todo:
+    build: .
+    environment:
+      DB_HOSTNAME: mysql
+      DB_NAME: todo
+      DB_USERNAME: todo
+      DB_PASSWORD: pass
+    links:
+      - mysql
+    ports:
+      - 8080:8080
+    depends_on:
+      - mysql
+
+volumes:
+  compose-mysql: {}

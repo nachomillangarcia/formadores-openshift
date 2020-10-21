@@ -11,5 +11,5 @@ spec:
   to:
     kind: Service
     name: tomcat
-    weight: 100
+    weight: 90
 
