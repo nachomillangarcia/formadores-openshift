@@ -33,11 +33,9 @@ spec:
                   cpu: 500m
                   memory: 1.5G
               livenessProbe:
-                exec:
-                  command:
-                  - cat
-                  - /tmp/healthy
-                initialDelaySeconds: 30
+                tcpSocket:
+                  port: 3306
+                initialDelaySeconds: 60
                 periodSeconds: 10
                 failureThreshold: 3
               readinessProbe:
