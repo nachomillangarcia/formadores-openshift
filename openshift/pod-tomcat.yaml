@@ -5,6 +5,6 @@ metadata:
 spec:
   containers:
   - name: tomcat
-    image: tomcat:latest
+    image: nachomillangarcia/tomcat
     ports:
     - containerPort: 8080
