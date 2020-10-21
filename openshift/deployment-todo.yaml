@@ -33,13 +33,15 @@ spec:
                   cpu: 1
                   memory: 1.5G  
               livenessProbe:
-                tcpSocket:
+                httpGet:
+                  path: /login
                   port: 8080
                 initialDelaySeconds: 60
                 periodSeconds: 10
                 failureThreshold: 3
               readinessProbe:
-                tcpSocket:
+                httpGet:
+                  path: /login
                   port: 8080
                 periodSeconds: 10          
                   
