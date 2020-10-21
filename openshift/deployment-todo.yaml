@@ -25,3 +25,21 @@ spec:
                 value: todo
               - name: DB_PASSWORD
                 value: pass
+              resources:
+                requests:
+                  cpu: 500m
+                  memory: 1G
+                limits:
+                  cpu: 1
+                  memory: 1.5G  
+              livenessProbe:
+                tcpSocket:
+                  port: 8080
+                initialDelaySeconds: 60
+                periodSeconds: 10
+                failureThreshold: 3
+              readinessProbe:
+                tcpSocket:
+                  port: 8080
+                periodSeconds: 10          
+                  
