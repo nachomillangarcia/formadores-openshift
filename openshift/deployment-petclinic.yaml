@@ -19,12 +19,6 @@ spec:
               # env:
               # - name: DB_HOSTNAME
               #   value: mysql
-              # - name: DB_NAME
-              #   value: todo
-              # - name: DB_USERNAME
-              #   value: todo
-              # - name: DB_PASSWORD
-              #   value: pass
               resources:
                 requests:
                   cpu: 500m
@@ -43,5 +37,11 @@ spec:
                 httpGet:
                   path: /
                   port: 8080
-                periodSeconds: 10          
-                  
+                periodSeconds: 10
+              volumeMounts:
+              - name: my-config-map
+                mountPath: /root/config
+            volumes:
+            - name: my-config-map
+              configMap:                  
+                name: petclinic-config
