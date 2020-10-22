@@ -1,0 +1,87 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: "mongo"
+spec:
+  ports:
+    - name: mongodb
+      port: 27017
+
+  selector:
+    name: "mongo"
+---
+
+kind: Service
+apiVersion: v1
+metadata:
+  name: "mongo-internal"
+  annotations:
+    service.alpha.kubernetes.io/tolerate-unready-endpoints: "true"
+spec:
+  clusterIP: None
+  ports:
+    - name: mongodb
+      port: 27017
+  selector:
+    name: "mongo"
+
+---
+
+apiVersion: apps/v1beta1
+kind: StatefulSet
+metadata:
+  name: "mongo"
+spec:
+  serviceName: "mongo-internal"
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        name: "mongo"
+    spec:
+      containers:
+        - name: mongo-container
+          image: "centos/mongodb-32-centos7"
+          ports:
+            - containerPort: 27017
+          args:
+            - "run-mongod-pet"
+          volumeMounts:
+            - name: mongo-data
+              mountPath: "/var/lib/mongodb/data"
+          env:
+            - name: MONGODB_USER
+              value: "mongo"
+            - name: MONGODB_PASSWORD
+              value: "mongo"
+            - name: MONGODB_DATABASE
+              value: "mongo"
+            - name: MONGODB_ADMIN_PASSWORD
+              value: "mongo"
+            - name: MONGODB_REPLICA_NAME
+              value: "mongo"
+            - name: MONGODB_KEYFILE_VALUE
+              value: "mongokey"
+            - name: MONGODB_SERVICE_NAME
+              value: "mongo-internal"
+          resources:
+            requests:
+              cpu: "0.2"
+              memory: "0.5Gi"         
+            limits:
+              cpu: "0.5"
+              memory: "1Gi"
+          readinessProbe:
+            exec:
+              command:
+                - stat
+                - /tmp/initialized
+  volumeClaimTemplates:
+    - metadata:
+        name: mongo-data
+      spec:
+        # the volume can be mounted as read-write by a single node
+        accessModes: [ ReadWriteOnce ]
+        resources:
+          requests:
+            storage: "1Gi"
