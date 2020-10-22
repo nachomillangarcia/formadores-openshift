@@ -107,20 +107,64 @@ Ver la descripción y eventos de un objeto en concreto: `oc describe <TYPE> <NAM
 ## Nodos
 Son los servidores físicos que forman parte del clúster.
 
-Lista todos los nodos con `kubectl get nodes`
+Lista todos los nodos con `oc get nodes`
 
 ## Pod
 Un Pod en Kubernetes es un objeto que define una **carga de trabajo**. Es decir, un Pod es uno o varios contenedores que son ejecutados conjuntamente en Kubernetes.
 
-Crea un pod con `kubectl apply -f pod-tomcat.yaml`
+Crea un pod con `oc apply -f pod-tomcat.yaml`
 
-Lista todos los pod con `kubectl get pod`
+Lista todos los pod con `oc get pod`
 
-Ver la descripción del pod:  `kubectl describe pod tomcat`
+Ver la descripción del pod:  `oc describe pod tomcat`
 
 ## Deployments
 El objeto Deployment define una aplicación con varias réplicas. El Deployment a su vez crea y gestiona los pods que corresponden a esa definición.
 
-Crea un deployment con `kubectl apply -f deployment-tomcat.yaml`
+Crea un deployment con `oc apply -f deployment-tomcat.yaml`
 
-Lista todos los deployment con `kubectl get deploy`
+Lista todos los deployment con `oc get deploy`
+
+
+## DaemonSet
+El objeto DaemonSet despliega un pod (solo uno) en cada nodo del clúster
+
+Crea un DaemonSet con `oc apply -f daemonset.yaml`
+
+Lista todos los DaemonSet con `oc get ds`
+
+## Statefulset
+El objeto Statefulset define una aplicación que tiene datos persistentes en disco (por ejemplo una base de datos). Es prácticamente igual que el deployment, pero levanta los pods siempre con un nombre fijo de forma que los datos pueden persistir entre despliegues y reinicios.
+
+Crea un statefulset con `oc apply -f statefulset.yaml`
+
+Lista todos los statefulset con `oc get statefulset`
+
+## Job
+El objeto Job define una carga de trabajo puntual, una tarea que finalizará con éxito en algún momento.
+
+Crea un job con `oc apply -f job.yaml`
+
+Lista todos los job con `oc get job`
+
+## CronJob
+El objeto CronJob crea jobs de forma periódica. Por ejemplo, todas las noches, para ejecutar tareas cada cierto tiempo
+
+Crea un job con `oc apply -f cronjob.yaml`
+
+Lista todos los job con `oc get cronjob`
+
+## Service
+Service representa un balanceador de carga entre varios pods que comparten una misma etiqueta, normalmente entre las réplicas de un mismo deployment o statefulset
+
+Crea un service con `oc apply -f service-tomcat.yaml`
+
+Lista todos los service con `oc get service`
+
+## Route
+
+Permite configurar el router incluido con OpenShift para que dirija tráfico a tu aplicación. El router expone una IP pública, hacia la que se puede dirigir cualquier dominio. Con un Route se define qué dominio deber ser dirigido a tu servicio en concreto. También se pueden configurar distintas rutas y dividir el tráfico entre distintos servicios.
+
+Puedes crear un Route con `oc apply -f route.yaml`
+
+Referencia de todas las posibilidades de Route: [https://docs.openshift.com/container-platform/4.5/welcome/index.html](https://docs.openshift.com/container-platform/4.5/welcome/index.html)

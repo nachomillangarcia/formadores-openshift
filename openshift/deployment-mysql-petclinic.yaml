@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    name: mysql-deployment
+spec:
+    selector:
+        matchLabels:
+            app: mysql
+    template:
+        metadata:
+            labels:
+                app: mysql
+        spec:
+            containers:
+            - name: mysql
+              image: mysql
+              ports:
+              - containerPort: 3306
+              env:
+              - name: MYSQL_ROOT_PASSWORD
+                value: root
+              - name: MYSQL_DATABASE
+                value: petclinic
+              - name: MYSQL_USER
+                value: petclinic
+              - name: MYSQL_PASSWORD
+                value: petclinic
+              resources:
+                requests:
+                  cpu: 200m
+                  memory: 1G
+                limits:
+                  cpu: 500m
+                  memory: 1.5G
+              livenessProbe:
+                tcpSocket:
+                  port: 3306
+                initialDelaySeconds: 60
+                periodSeconds: 10
+                failureThreshold: 3
+              readinessProbe:
+                tcpSocket:
+                  port: 3306
+                periodSeconds: 10                   
