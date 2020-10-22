@@ -3,6 +3,7 @@ kind: Deployment
 metadata:
     name: petclinic
 spec:
+    replicas: 1
     selector:
         matchLabels:
             app: petclinic
@@ -41,7 +42,12 @@ spec:
               volumeMounts:
               - name: my-config-map
                 mountPath: /root/config
+              - name: my-data-pvc
+                mountPath: /mnt/data               
             volumes:
             - name: my-config-map
               configMap:                  
                 name: petclinic-config
+            - name: my-data-pvc
+              persistentVolumeClaim:
+                  claimName: my-data
