@@ -1,0 +1,15 @@
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  labels:
+    application: petclinic
+  name: petclinic
+spec:
+  host: petclinic.2886795274-80-kota01.environments.katacoda.com
+  port:
+    targetPort: 8080
+  to:
+    kind: Service
+    name: petclinic
+    weight: 100
+
