@@ -3,6 +3,9 @@ kind: Deployment
 metadata:
     name: mysql-deployment
 spec:
+    replicas: 1
+    strategy:
+      type: Recreate
     selector:
         matchLabels:
             app: mysql

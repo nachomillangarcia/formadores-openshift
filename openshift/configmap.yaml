@@ -5,11 +5,12 @@ metadata:
 data:
   FOO: BAR
   NAME: PETCLINIC
+  spring_profiles_active: mysql
   application.properties: |
     database=mysql
     spring.datasource.url=jdbc:mysql://mysql:3306/petclinic
     spring.datasource.username=petclinic
     spring.datasource.password=petclinic
-    spring.datasource.initialization-mode=always
+
 
 
