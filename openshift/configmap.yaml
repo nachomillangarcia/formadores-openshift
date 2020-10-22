@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: petclinic-config
+data:
+  FOO: BAR
+  NAME: PETCLINIC
+  application.properties: |
+    database=mysql
+    spring.datasource.url=mysql-petclinic
+    spring.datasource.username=petclinic
+    spring.datasource.password=petclinic
+    spring.datasource.initialization-mode=always
+
+
