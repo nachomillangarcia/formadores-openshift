@@ -42,10 +42,3 @@ spec:
                 tcpSocket:
                   port: 3306
                 periodSeconds: 10
-              volumeMounts:
-                - name: my-volume-data
-                  mountPath: /var/lib/mysql
-            volumes:
-              - name: my-volume-data
-                persistentVolumeClaim:
-                    claimName: my-data

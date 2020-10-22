@@ -5,7 +5,7 @@ metadata:
     application: petclinic
   name: petclinic
 spec:
-  host: petclinic.2886795274-80-kota01.environments.katacoda.com
+  host: petclinic.2886795291-80-frugo02.environments.katacoda.com
   port:
     targetPort: 8080
   to:

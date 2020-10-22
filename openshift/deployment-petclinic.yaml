@@ -41,13 +41,9 @@ spec:
                 periodSeconds: 10
               volumeMounts:
               - name: my-config-map
-                mountPath: /root/config
-              - name: my-data-pvc
-                mountPath: /mnt/data               
+                mountPath: /app/application.properties
+                subPath: application.properties                      
             volumes:
             - name: my-config-map
               configMap:                  
                 name: petclinic-config
-            - name: my-data-pvc
-              persistentVolumeClaim:
-                  claimName: my-data
