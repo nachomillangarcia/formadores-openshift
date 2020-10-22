@@ -16,9 +16,9 @@ spec:
               image: nachomillangarcia/petclinic
               ports:
               - containerPort: 8080
-              # env:
-              # - name: DB_HOSTNAME
-              #   value: mysql
+              envFrom:
+              - configMapRef:
+                  name: petclinic-config
               resources:
                 requests:
                   cpu: 500m
