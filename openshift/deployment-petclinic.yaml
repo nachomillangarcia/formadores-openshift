@@ -17,9 +17,9 @@ spec:
               image: docker-registry.default.svc:5000/formadores/petclinic
               ports:
               - containerPort: 8080
-              envFrom:
-              - configMapRef:
-                  name: petclinic-config
+              # envFrom:
+              # - configMapRef:
+              #     name: petclinic-config
               resources:
                 requests:
                   cpu: 500m
