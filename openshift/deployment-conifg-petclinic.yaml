@@ -1,21 +1,19 @@
-apiVersion: apps/v1
-kind: Deployment
+apiVersion: apps.openshift.io/v1
+kind: DeploymentConfig
 metadata:
     name: petclinic
 spec:
     replicas: 1
     selector:
-        matchLabels:
-            app: petclinic
+        deploymentconfig: petclinic
     template:
         metadata:
             labels:
-                app: petclinic
+                deploymentconfig: petclinic
         spec:
-            serviceAccountName: petclinic
             containers:
             - name: petclinic
-              image: docker-registry.default.svc:5000/formadores/petclinic
+              image: petclinc:latest
               ports:
               - containerPort: 8080
               # envFrom:
@@ -40,11 +38,13 @@ spec:
                   path: /
                   port: 8080
                 periodSeconds: 10
-            #   volumeMounts:
-            #   - name: my-config-map
-            #     mountPath: /app/application.properties
-            #     subPath: application.properties                      
-            # volumes:
-            # - name: my-config-map
-            #   configMap:                  
-            #     name: petclinic-config
+    triggers:
+      - imageChangeParams:
+          automatic: true
+          containerNames:
+            - petclinic
+          from:
+            kind: ImageStreamTag
+            name: 'petclinc:latest'
+            namespace: formadores
+        type: ImageChange

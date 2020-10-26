@@ -13,7 +13,7 @@ spec:
         spec:
             containers:
             - name: todo
-              image: nachomillangarcia/java-todo
+              image: docker-registry.default.svc:5000/formadores/java-todo
               ports:
               - containerPort: 8080
               env:
