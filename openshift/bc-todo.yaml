@@ -1,0 +1,30 @@
+kind: "BuildConfig"
+apiVersion: "v1"
+metadata:
+  labels:
+    application: todo
+  name: "todo" 
+spec:
+  # runPolicy: "Serial" 
+  # triggers: 
+  #   -
+  #     type: "GitHub"
+  #     github:
+  #       secret: "secret101"
+  #   - type: "Generic"
+  #     generic:
+  #       secret: "secret101"
+  #   -
+  #     type: "ImageChange"
+  source: 
+    git:
+      uri: "https://github.com/nachomillangarcia/formadores-openshift.git"
+    contextDir: java-app-todo-mysql
+  strategy:
+    dockerStrategy:
+      dockerfilePath: .
+  output:
+    to:
+      kind: "DockerImage"
+      name: "docker-registry.default.svc:5000/formadores/java-todo"
+
