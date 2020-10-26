@@ -2,7 +2,6 @@ FROM maven:3.6.3-jdk-8
 WORKDIR /app
 COPY pom.xml pom.xml
 COPY src src
-RUN ls
 RUN mvn package
 RUN mv target/*.jar target/app.jar
 CMD ["java", "-jar", "target/app.jar"]
