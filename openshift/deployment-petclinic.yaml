@@ -14,7 +14,7 @@ spec:
         spec:
             containers:
             - name: petclinic
-              image: nachomillangarcia/petclinic
+              image: docker-registry.default.svc:5000/formadores/petclinic
               ports:
               - containerPort: 8080
               envFrom:
@@ -39,11 +39,11 @@ spec:
                   path: /
                   port: 8080
                 periodSeconds: 10
-              volumeMounts:
-              - name: my-config-map
-                mountPath: /app/application.properties
-                subPath: application.properties                      
-            volumes:
-            - name: my-config-map
-              configMap:                  
-                name: petclinic-config
+            #   volumeMounts:
+            #   - name: my-config-map
+            #     mountPath: /app/application.properties
+            #     subPath: application.properties                      
+            # volumes:
+            # - name: my-config-map
+            #   configMap:                  
+            #     name: petclinic-config
