@@ -5,17 +5,17 @@ metadata:
     application: petclinic
   name: "petclinic" 
 spec:
-  # runPolicy: "Serial" 
-  # triggers: 
-  #   -
-  #     type: "GitHub"
-  #     github:
-  #       secret: "secret101"
-  #   - type: "Generic"
-  #     generic:
-  #       secret: "secret101"
-  #   -
-  #     type: "ImageChange"
+  runPolicy: "Serial" 
+  triggers: 
+    -
+      type: "GitHub"
+      github:
+        secret: "secret101"
+    - type: "Generic"
+      generic:
+        secret: "secret101"
+    -
+      type: "ImageChange"
   source: 
     git:
       uri: "https://github.com/nachomillangarcia/formadores-openshift.git"
