@@ -12,10 +12,9 @@ spec:
             labels:
                 app: petclinic
         spec:
-            serviceAccountName: petclinic
-            containers:
+           containers:
             - name: petclinic
-              image: docker-registry.default.svc:5000/formadores/petclinic
+              image: nachomillangarcia/petclinic
               ports:
               - containerPort: 8080
               # envFrom:
