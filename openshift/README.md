@@ -105,11 +105,13 @@ Ver la descripción y eventos de un objeto en concreto: `oc describe <TYPE> <NAM
 # Objetos de Kubernetes y OpenShift (y OKD)
 
 ## Nodos
+
 Son los servidores físicos que forman parte del clúster.
 
 Lista todos los nodos con `oc get nodes`
 
 ## Pod
+
 Un Pod en Kubernetes es un objeto que define una **carga de trabajo**. Es decir, un Pod es uno o varios contenedores que son ejecutados conjuntamente en Kubernetes.
 
 Crea un pod con `oc apply -f pod-tomcat.yaml`
@@ -119,14 +121,24 @@ Lista todos los pod con `oc get pod`
 Ver la descripción del pod:  `oc describe pod tomcat`
 
 ## Deployments
+
 El objeto Deployment define una aplicación con varias réplicas. El Deployment a su vez crea y gestiona los pods que corresponden a esa definición.
 
 Crea un deployment con `oc apply -f deployment-tomcat.yaml`
 
 Lista todos los deployment con `oc get deploy`
 
+## DeploymentConfig
+
+Similar to deployment. deploymentConfig es un objeto propio de Openshift que da todas las funcionalidades del objeto deployment y añade en el `spec` el campo `triggers`, con el que podemos hacer que el deploymentConfig actualice automáticamente sus pods cuando observa cambios en una imagen de Docker por ejemplo.
+
+
+Crea un deployment con `oc apply -f deployment-config-petclinic.yaml`
+
+Lista todos los deployment con `oc get dc`
 
 ## DaemonSet
+
 El objeto DaemonSet despliega un pod (solo uno) en cada nodo del clúster
 
 Crea un DaemonSet con `oc apply -f daemonset.yaml`
@@ -134,6 +146,7 @@ Crea un DaemonSet con `oc apply -f daemonset.yaml`
 Lista todos los DaemonSet con `oc get ds`
 
 ## Statefulset
+
 El objeto Statefulset define una aplicación que tiene datos persistentes en disco (por ejemplo una base de datos). Es prácticamente igual que el deployment, pero levanta los pods siempre con un nombre fijo de forma que los datos pueden persistir entre despliegues y reinicios.
 
 Crea un statefulset con `oc apply -f statefulset.yaml`
@@ -141,6 +154,7 @@ Crea un statefulset con `oc apply -f statefulset.yaml`
 Lista todos los statefulset con `oc get statefulset`
 
 ## Job
+
 El objeto Job define una carga de trabajo puntual, una tarea que finalizará con éxito en algún momento.
 
 Crea un job con `oc apply -f job.yaml`
@@ -148,6 +162,7 @@ Crea un job con `oc apply -f job.yaml`
 Lista todos los job con `oc get job`
 
 ## CronJob
+
 El objeto CronJob crea jobs de forma periódica. Por ejemplo, todas las noches, para ejecutar tareas cada cierto tiempo
 
 Crea un job con `oc apply -f cronjob.yaml`
@@ -155,6 +170,7 @@ Crea un job con `oc apply -f cronjob.yaml`
 Lista todos los job con `oc get cronjob`
 
 ## Service
+
 Service representa un balanceador de carga entre varios pods que comparten una misma etiqueta, normalmente entre las réplicas de un mismo deployment o statefulset
 
 Crea un service con `oc apply -f service-tomcat.yaml`
@@ -168,3 +184,102 @@ Permite configurar el router incluido con OpenShift para que dirija tráfico a t
 Puedes crear un Route con `oc apply -f route.yaml`
 
 Referencia de todas las posibilidades de Route: [https://docs.openshift.com/container-platform/4.5/welcome/index.html](https://docs.openshift.com/container-platform/4.5/welcome/index.html)
+
+## ConfigMap
+
+Configmap contiene una o varias variables que más adelante se pueden montar en cualquier carga de trabajo.
+
+Crea un service con `kubectl apply -f configmap.yaml`
+
+Lista todos los service con `kubectl get configmap`
+
+Puedes crear un configMap a partir de un archivo o carpeta con `kubectl create configmap`
+
+En el ejemplo `deployment-petclinic.yaml` tienes un ejemplo de cómo montar un configMap como volumen y como variables de entorno.
+
+## Secret
+
+Similar a configmap, pero los datos se almacenan codificados en base64
+
+Crea un service con `kubectl apply -f secret.yaml`
+
+Lista todos los service con `kubectl get secret`
+
+Puedes crear un secret a partir de un archivo o carpeta con `kubectl create secret generic`
+
+También puedes crear un secret especial con las credenciales para acceder a registries privados:
+
+`kubectl create secret docker-registry`
+
+## PersistentVolume
+
+Un persistentVolume representa un disco persistente de cualquier tipo que está disponible para ser utilizado en Kubernetes.
+
+Lo habitual no es crear estos persistentVolume de forma manual sino que una storageClass los cree automáticamente cuando detecta un nuevo persistentVolumeClaim
+
+Crea un persistentVolume con `kubectl apply -f persistentvolume.yaml`
+
+Lista todos los persistentVolume con `kubectl get pv`
+
+
+## PersistentVolumeClaim
+Un persistentVolumeClaim representa una petición de disco persistente, con ciertos requisitos de tamaño y modos de acceso. Éstos son asociados con pod para habilitar persistencia de datos a sus contenedores. Kubernetes asociará un persistentVolumeClaim con un persistentVolume que cumpla sus requisitos.
+
+Crea un persistentVolumeClaim con `kubectl apply -f persistentvolumeclaim.yaml`
+
+Lista todos los persistentVolumeClaim con `kubectl get pvc`
+
+
+## ServiceAccount
+
+Representa un token de autenticación que puede ser montado en los pods. Este token sirve para autenticar las peticiones que realice ese pod hacia el propio cluster de OpenShift. Con Roles y RoleBindings se puede dar permisos a esta serviceAccount para que interactúa con otros recursos del clúster.
+
+En todos los proyectos/namespaces existe una serviceAccount `default` que ser monta por defecto en todos los pods a menos que se especifique una distinta.
+
+
+## BuildConfig
+
+Define todo lo relativo a la construcción de un proyecto. En concreto tiene la información sobre el origen del código (`source`), la estrategia o método para construirlo (`strategy`) y el resultado (`output`), que en todo caso será siempre una imagen de Docker.
+
+Puedes crear una buildConfig con `oc apply -f bc-petclinic.yaml`
+
+Una BuildConfig puede construir:
+* Dockerfiles con la estrategia `dockerStrategy`
+* Contenedores a partir de imágenes preparadas para source2image con la estrategia `sourceStrategy`
+* Ejecutar simplemente un contenedor personalizado con la estrategia `customStrategy`
+* Jenkinsfiles, con la estrategia `jenkinsPipelineStrategy`
+
+Referencia de las estrategias posibles: [https://docs.openshift.com/container-platform/4.5/builds/build-strategies.html](https://docs.openshift.com/container-platform/4.5/builds/build-strategies.html)
+
+En los archivos que comienzan con `bc-.....yaml` tienes ejemplos de cada una de ellas.
+
+## Build 
+
+Es simplemente una ejecución de una buildConfig
+
+Puedes lanzar una build con `oc start-build`
+
+
+## ImageStream
+
+Representa una imagen de Docker presente en el registry interno de OpenShift. Nos permite abstraernos de la conexión con el registry.
+
+En `bc-petclinic.yaml` creamos y utilizamos imageStream en una buildConfig
+
+## HorizontalPodAutoscaling
+
+Con este objeto configuramos el autoescalado de un Deployment o StatefulSet. En él se espcifican los parámetros del autoescalado como el máximo y mínimo número de réplicas y las métricas y targets que dispararan el autoescalado.
+
+Crea un HorizontalPodAutoscaling con `kubectl apply -f hpa-petclinic.yaml`
+
+Lista todos los HorizontalPodAutoscaling con `kubectl get hpa`
+
+# Componentes importantes de OpenShift
+
+## Docker Registry
+
+## Router
+
+# Source2Img (S2I)
+
+# Helm
