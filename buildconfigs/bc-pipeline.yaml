@@ -1,0 +1,17 @@
+kind: "BuildConfig"
+apiVersion: "build.openshift.io/v1"
+metadata:
+  name: "sample-pipeline"
+spec:
+  source: 
+    git:
+      uri: "https://github.com/nachomillangarcia/formadores-openshift.git"
+    contextDir: spring-petclinic
+  strategy:
+    jenkinsPipelineStrategy:
+      jenkinsfile: |-
+        node() {
+          stage 'build'
+          sh 'echo Hello World'
+          sh 'ls'
+        }
