@@ -8,11 +8,16 @@ Con los contenedores puedes levantar varios servicios aislados unos de otros y d
 
 **Docker** es la tecnología que nos permite interactuar y crear contenedores de forma sencilla.
 
+<img src="img/docker1.png" alt="docker vs VMs" width="600px">
 
+
+Diferencias entre imágenes, contenedores y Dockerfiles:
+
+
+<img src="img/imagenes-contenedores.png" alt="Architecture" width="600px">
 
 <img src="img/architecture.svg" alt="Architecture" width="600px">
 
-<img src="img/docker1.png" alt="docker vs VMs" width="600px">
 
 
 Los contenedores se levantan a partir de **imágenes**, que son plantillas que incluyen todo lo necesario para ejecutar el servicio. Estas plantillas se definen en un **Dockerfile**. Se pueden construir y ejecutar en cualquier tipo de sistema de la misma forma.
